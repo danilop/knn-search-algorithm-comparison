@@ -174,3 +174,11 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).
+
+## KNN Search Results Chart
+
+Below is a chart showing the KNN search results:
+
+![KNN Search Results Chart](knn_search_comparison.png)
+
+A CSV file containing the detailed results is available [here](knn_search_results.csv).

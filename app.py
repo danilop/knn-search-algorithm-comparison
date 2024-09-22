@@ -304,34 +304,36 @@ def create_results_chart(csv_filename):
     # Read the CSV file
     df = pd.read_csv(csv_filename)
 
-    # Create a new figure
-    plt.figure(figsize=(15, 10))
+    # Create subplots for each dimension
+    dimensions = df['Num Dimensions'].unique()
+    fig, axes = plt.subplots(len(dimensions), 1, figsize=(15, 5*len(dimensions)), sharex=True)
+    fig.suptitle('KNN Search Algorithm Comparison', fontsize=16)
 
-    # Generate bar positions
-    bar_width = 0.2
-    r1 = np.arange(len(df))
-    r2 = [x + bar_width for x in r1]
-    r3 = [x + bar_width for x in r2]
-    r4 = [x + bar_width for x in r3]
+    # Color palette for algorithms
+    colors = {'KD-Tree': 'blue', 'Ball Tree': 'orange', 'Brute Force': 'green', 'HNSW': 'red'}
 
-    # Create bars
-    plt.bar(r1, df['KD-Tree Search Time'], width=bar_width, label='KD-Tree')
-    plt.bar(r2, df['Ball Tree Search Time'], width=bar_width, label='Ball Tree')
-    plt.bar(r3, df['Brute Force Search Time'], width=bar_width, label='Brute Force')
-    plt.bar(r4, df['HNSW Search Time'], width=bar_width, label='HNSW')
+    for i, dim in enumerate(dimensions):
+        dim_data = df[df['Num Dimensions'] == dim]
+        
+        for algo in ['KD-Tree', 'Ball Tree', 'Brute Force', 'HNSW']:
+            axes[i].plot(dim_data['Num Vectors'], dim_data[f'{algo} Search Time'], 
+                         marker='o', label=algo, color=colors[algo])
+        
+        axes[i].set_ylabel('Search Time (seconds)')
+        axes[i].set_yscale('log')
+        axes[i].set_title(f'Dimensions: {dim}')
+        axes[i].grid(True, which="both", ls="-", alpha=0.2)
+        axes[i].legend()
 
-    # Add labels and title
-    plt.xlabel('Test Cases')
-    plt.ylabel('Search Time (seconds)')
-    plt.title('KNN Search Algorithm Comparison')
-    plt.xticks([r + bar_width for r in range(len(df))], [f"{v}\n{d}" for v, d in zip(df['Num Vectors'], df['Num Dimensions'])])
+    # Set x-axis labels on the bottom subplot
+    axes[-1].set_xlabel('Number of Vectors')
+    axes[-1].set_xticks(df['Num Vectors'].unique())
+    axes[-1].set_xticklabels(df['Num Vectors'].unique(), rotation=45)
 
-    # Add a legend
-    plt.legend()
-
-    # Save the chart
-    plt.savefig('knn_search_comparison.png')
+    plt.tight_layout()
+    plt.savefig('knn_search_comparison.png', dpi=300, bbox_inches='tight')
     print("Chart saved as knn_search_comparison.png")
+    plt.close(fig)  # Close the figure to free up memory
 
 if __name__ == "__main__":
     main()
