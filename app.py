@@ -316,11 +316,10 @@ def create_results_chart(csv_filename):
         dim_data = df[df['Num Dimensions'] == dim]
         
         for algo in ['KD-Tree', 'Ball Tree', 'Brute Force', 'HNSW']:
-            axes[i].plot(dim_data['Num Vectors'], dim_data[f'{algo} Search Time'], 
-                         marker='o', label=algo, color=colors[algo])
+            axes[i].loglog(dim_data['Num Vectors'], dim_data[f'{algo} Search Time'], 
+                           marker='o', label=algo, color=colors[algo])
         
         axes[i].set_ylabel('Search Time (seconds)')
-        axes[i].set_yscale('log')
         axes[i].set_title(f'Dimensions: {dim}')
         axes[i].grid(True, which="both", ls="-", alpha=0.2)
         axes[i].legend()
