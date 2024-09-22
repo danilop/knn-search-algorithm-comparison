@@ -307,7 +307,7 @@ def create_results_chart(csv_filename):
     # Create subplots for each dimension
     dimensions = df['Num Dimensions'].unique()
     fig, axes = plt.subplots(len(dimensions), 1, figsize=(15, 5*len(dimensions)), sharex=True)
-    fig.suptitle('KNN Search Algorithm Comparison', fontsize=16)
+    fig.suptitle('KNN Search Algorithm Comparison', fontsize=16, y=0.95)  # Adjust y position
 
     # Color palette for algorithms
     colors = {'KD-Tree': 'blue', 'Ball Tree': 'orange', 'Brute Force': 'green', 'HNSW': 'red'}
@@ -330,6 +330,7 @@ def create_results_chart(csv_filename):
     axes[-1].set_xticklabels(df['Num Vectors'].unique(), rotation=45)
 
     plt.tight_layout()
+    plt.subplots_adjust(top=0.92)  # Adjust top margin to make room for title
     plt.savefig('knn_search_comparison.png', dpi=300, bbox_inches='tight')
     print("Chart saved as knn_search_comparison.png")
     plt.close(fig)  # Close the figure to free up memory
