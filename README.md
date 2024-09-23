@@ -1,6 +1,8 @@
 # KNN Search Algorithm Comparison
 
-This project compares the performance of different K-Nearest Neighbors (KNN) search algorithms across various dataset sizes and dimensions. The algorithms compared are:
+The K-nearest neighbors (k-NN) algorithm, introduced in 1951, has been widely used for both classification and regression tasks. The core concept involves identifying the k most similar instances (neighbors) to a given query point within a dataset and using these neighbors to make predictions or classifications. In recent years, the importance of vector databases and vector indexes has grown, particularly for information retrieval to support large language models (LLMs) in processing extensive datasets of text and other data. A prominent example of this application is retrieval-augmented generation (RAG).
+
+This project compares the performance of different k-NN search algorithms across various dataset sizes and dimensions. The algorithms compared are:
 
 1. KD-Tree
 2. Ball Tree
